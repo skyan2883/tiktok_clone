@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/discover/discover_screen.dart';
+import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
@@ -21,7 +23,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
 
   void _onNavTap(int idx) {
     setState(() {
@@ -45,6 +47,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
@@ -53,11 +57,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != tabIdx['discover'],
-            child: Container(),
+            child: const DiscoverScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != tabIdx['inbox'],
-            child: Container(),
+            child: const InboxScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != tabIdx['profile'],
@@ -69,22 +73,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         height: 60,
         padding: const EdgeInsets.symmetric(
             vertical: Sizes.size7, horizontal: Sizes.size2),
-        color: Colors.black,
+        color: _selectedIndex == 0 ? Colors.black : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavTab(
+              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
               icon: FontAwesomeIcons.house,
-              color: Colors.white,
+              color: _selectedIndex == 0 ? Colors.white : Colors.black,
               text: 'Home',
               isSelected: _selectedIndex == tabIdx['home'],
               selectedIcon: FontAwesomeIcons.house,
               onTap: () => _onNavTap(tabIdx['home']!),
             ),
             NavTab(
+              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
               icon: FontAwesomeIcons.compass,
-              color: Colors.white,
+              color: _selectedIndex == 0 ? Colors.white : Colors.black,
               text: 'Discover',
               isSelected: _selectedIndex == tabIdx['discover'],
               selectedIcon: FontAwesomeIcons.solidCompass,
@@ -93,20 +99,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Gaps.h20,
             GestureDetector(
               onTap: _onPostVideoButtonTap,
-              child: const PostVideoButton(),
+              child: PostVideoButton(
+                inverted: (_selectedIndex != 0),
+              ),
             ),
             Gaps.h20,
             NavTab(
+              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
               icon: FontAwesomeIcons.message,
-              color: Colors.white,
+              color: _selectedIndex == 0 ? Colors.white : Colors.black,
               text: 'Inbox',
               isSelected: _selectedIndex == tabIdx['inbox'],
               selectedIcon: FontAwesomeIcons.solidMessage,
               onTap: () => _onNavTap(tabIdx['inbox']!),
             ),
             NavTab(
+              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
               icon: FontAwesomeIcons.user,
-              color: Colors.white,
+              color: _selectedIndex == 0 ? Colors.white : Colors.black,
               text: 'Profile',
               isSelected: _selectedIndex == tabIdx['profile'],
               selectedIcon: FontAwesomeIcons.solidUser,

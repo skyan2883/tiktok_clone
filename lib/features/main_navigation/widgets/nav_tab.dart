@@ -11,6 +11,7 @@ class NavTab extends StatelessWidget {
   final Color color;
   final String text;
   final bool isSelected;
+  final Color bgColor;
 
   final Function onTap;
 
@@ -21,6 +22,7 @@ class NavTab extends StatelessWidget {
     required this.color,
     required this.text,
     required this.isSelected,
+    required this.bgColor,
     required this.onTap,
   });
 
@@ -30,7 +32,7 @@ class NavTab extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap(),
         child: Container(
-          color: Colors.black,
+          color: bgColor,
           child: AnimatedOpacity(
             opacity: isSelected ? 1 : 0.6,
             duration: const Duration(milliseconds: 200),

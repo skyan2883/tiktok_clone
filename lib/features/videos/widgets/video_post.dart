@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
   final int index;
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
+
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+  });
 
   @override
   State<VideoPost> createState() => _VideoPostState();
@@ -17,8 +23,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset('assets/videos/video1.mp4');
+  late VideoPlayerController _videoPlayerController;
 
   bool _isPaused = false;
   bool _isMore = false;
@@ -34,12 +39,19 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
+    }
+    if (info.visibleFraction == 0 && _videoPlayerController.value.isPlaying) {
+      _onTogglePause();
     }
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController = VideoPlayerController.asset(
+        'assets/videos/video${widget.index + 1}.mp4');
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     setState(() {});
@@ -49,6 +61,7 @@ class _VideoPostState extends State<VideoPost>
   @override
   void initState() {
     super.initState();
+
     _initVideoPlayer();
     _animationController = AnimationController(
       vsync: this,
@@ -62,6 +75,7 @@ class _VideoPostState extends State<VideoPost>
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -81,6 +95,19 @@ class _VideoPostState extends State<VideoPost>
   void _onMoreTap() {
     _isMore = !_isMore;
     setState(() {});
+  }
+
+  void _onCommentsTap() async {
+    if (_videoPlayerController.value.isPlaying) {
+      _onTogglePause();
+    }
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const VideoComments(),
+      backgroundColor: Colors.transparent,
+    );
+    _onTogglePause();
   }
 
   @override
@@ -215,7 +242,29 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
-            )
+            ),
+          Positioned(
+            bottom: 10,
+            right: 15,
+            child: Column(
+              children: [
+                const CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/pictures/pic1.png'),
+                ),
+                Gaps.v16,
+                const VideoButton(
+                    icon: FontAwesomeIcons.solidHeart, text: '2.9M'),
+                Gaps.v16,
+                GestureDetector(
+                    onTap: _onCommentsTap,
+                    child: const VideoButton(
+                        icon: FontAwesomeIcons.solidComment, text: '33.0k')),
+                Gaps.v16,
+                const VideoButton(icon: FontAwesomeIcons.share, text: 'Share'),
+              ],
+            ),
+          ),
         ],
       ),
     );
