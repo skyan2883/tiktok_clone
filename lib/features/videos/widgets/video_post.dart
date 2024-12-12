@@ -24,7 +24,7 @@ class VideoPost extends StatefulWidget {
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   late VideoPlayerController _videoPlayerController;
-
+  bool _savedPlaybackState = false;
   bool _isPaused = false;
   bool _isMore = false;
   final Duration _animationDuration = const Duration(milliseconds: 200);
@@ -39,13 +39,24 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+
+    _isPaused = _savedPlaybackState;
+
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
+      _savedPlaybackState = false;
     }
     if (info.visibleFraction == 0 && _videoPlayerController.value.isPlaying) {
-      _onTogglePause();
+      _videoPlayerController.pause();
+      _savedPlaybackState = true;
+      if (mounted) {
+        setState(() {
+          _isPaused = true;
+        });
+      }
     }
   }
 
@@ -182,7 +193,7 @@ class _VideoPostState extends State<VideoPost>
                       overflow: _isMore
                           ? TextOverflow.visible
                           : TextOverflow.ellipsis,
-                      '#QWER #아이돌 1111111111112222222222333333333344444444444\na\ns\nd\n dddd',
+                      '#QWER #��이돌 1111111111112222222222333333333344444444444\na\ns\nd\n dddd',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: Sizes.size12,
