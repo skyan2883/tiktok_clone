@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/widgets/volume_slider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -27,6 +29,9 @@ class _VideoPostState extends State<VideoPost>
   bool _savedPlaybackState = false;
   bool _isPaused = false;
   bool _isMore = false;
+  bool _isMuted = false;
+  double _volume = 0.5;
+  double _savedVolume = 0.5;
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   late final AnimationController _animationController;
@@ -65,6 +70,10 @@ class _VideoPostState extends State<VideoPost>
         'assets/videos/video${widget.index + 1}.mp4');
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      _onVolumeTap();
+      _isMuted = true;
+    }
     setState(() {});
     _videoPlayerController.addListener(_onVideoChange);
   }
@@ -121,6 +130,27 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
+  void _onVolumeTap() {
+    _isMuted = !_isMuted;
+    if (_isMuted) {
+      _savedVolume = _volume;
+      _volume = 0;
+      _videoPlayerController.setVolume(0);
+    } else {
+      _volume = _savedVolume;
+      _videoPlayerController.setVolume(_savedVolume);
+    }
+    setState(() {});
+  }
+
+  void _onVolumeChanged(double value) {
+    setState(() {
+      _isMuted = false;
+      _volume = value;
+      _videoPlayerController.setVolume(value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -165,18 +195,35 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned(
+            top: 10,
+            left: 15,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: _onVolumeTap,
+                  child: AnimatedContainer(
+                    duration: _animationDuration,
+                    child: FaIcon(
+                      _isMuted
+                          ? FontAwesomeIcons.volumeXmark
+                          : FontAwesomeIcons.volumeHigh,
+                      color: Colors.white,
+                      size: Sizes.size36,
+                    ),
+                  ),
+                ),
+                Gaps.v16,
+                VolumeSlider(
+                    volume: _volume, onVolumeChanged: _onVolumeChanged),
+              ],
+            ),
+          ),
+          Positioned(
             bottom: 10,
             left: 15,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "@CargoMarket",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Sizes.size14,
-                      fontWeight: FontWeight.w500),
-                ),
                 Gaps.v10,
                 const Text(
                   'This is my first Video!',
@@ -193,7 +240,7 @@ class _VideoPostState extends State<VideoPost>
                       overflow: _isMore
                           ? TextOverflow.visible
                           : TextOverflow.ellipsis,
-                      '#QWER #��이돌 1111111111112222222222333333333344444444444\na\ns\nd\n dddd',
+                      '#QWER #아이돌 1111111111112222222222333333333344444444444\na\ns\nd\n dddd',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: Sizes.size12,
@@ -258,7 +305,19 @@ class _VideoPostState extends State<VideoPost>
             bottom: 10,
             right: 15,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                GestureDetector(
+                  onTap: _onVolumeTap,
+                  child: SizedBox(
+                    child: FaIcon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                      size: Sizes.size36,
+                    ),
+                  ),
+                ),
+                Gaps.v16,
                 const CircleAvatar(
                   radius: 25,
                   backgroundImage: AssetImage('assets/pictures/pic1.png'),
