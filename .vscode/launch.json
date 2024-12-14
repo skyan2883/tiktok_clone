@@ -2,7 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter",
+      "name": "Flutter (Android)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "192.168.35.207:5555"] // Android 디바이스로 설정
+    },
+    {
+      "name": "Flutter (Web)",
       "request": "launch",
       "type": "dart",
       "args": ["-d", "web-server", "--web-port=8080"]
