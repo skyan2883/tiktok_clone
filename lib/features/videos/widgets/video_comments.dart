@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -45,7 +46,9 @@ class _VideoCommentsState extends State<VideoComments> {
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.6,
+          maxWidth: kIsWeb
+              ? MediaQuery.of(context).size.width * 0.6
+              : MediaQuery.of(context).size.width,
         ),
         child: Scaffold(
           backgroundColor: Colors.grey.shade50,
