@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -29,7 +31,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
+            constraints: kIsWeb
+                ? const BoxConstraints(maxWidth: 500)
+                : BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width,
+                  ),
             child: ListView(
               children: [
                 ListTile(
@@ -40,7 +46,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 CheckboxListTile(
-                  activeColor: Colors.black,
+                  activeColor:
+                      isDarkMode(context) ? Colors.green : Colors.black,
                   title: const Text('Marketing emails'),
                   value: _notifications,
                   onChanged: onChanged,
@@ -112,6 +119,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                   ),
+                ),
+                ListTile(
+                  onTap: () async {
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1980),
+                      lastDate: DateTime(2030),
+                    );
+                    if (!mounted) return;
+
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    if (!mounted) return;
+
+                    final booking = await showDateRangePicker(
+                      context: context,
+                      firstDate: DateTime(1980),
+                      lastDate: DateTime(2030),
+                      builder: (context, child) => Theme(
+                        data: ThemeData(
+                          appBarTheme: const AppBarTheme(
+                              backgroundColor: Colors.black,
+                              foregroundColor: Colors.white),
+                        ),
+                        child: child!,
+                      ),
+                    );
+                  },
+                  title: const Text('What is your birthday?'),
+                  subtitle: const Text(
+                      'We will use this to personalize your experience.'),
                 ),
               ],
             ),

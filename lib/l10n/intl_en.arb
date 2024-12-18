@@ -1,0 +1,53 @@
+{
+  "signUp": "Sign up for {nameOfTheApp}",
+  "@signUp": {
+    "description": "The title people see when they open the app for the first time.",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TikTok"
+      }
+    }
+  },
+  "signUpDescription": "Create a profile, follow other accounrts, make your own {videoCount, plural, =0 {no videos} =1 {video} other {videos}}, and more.",
+  "signUpWithEmail": "Use email & password",
+  "signUpWithApple": "Continue with Apple",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "login": "Log in",
+  "loginTitle": "Log in to {nameOfTheApp}",
+  "@loginTitle": {
+    "description": "The title people see when they open the app for the first time.",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TikTok"
+      }
+    }
+  },
+  "loginSubTitle": "Manage your account, check notifications, comment on videos, and more.",
+  "loginWithEmail": "Use email / username",
+  "loginWithApple": "Continue with Apple",
+  "dontHavaAccount": "Don\\'t have an account?",
+  "likeCount": "{ value }",
+  "@likeCount": {
+    "description": "The number of likes a video has.",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact",
+        "example": "2900000"
+      }
+    }
+  },
+  "commentCount": "{ value }",
+  "@commentCount": {
+    "description": "The number of comments a video has.",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact",
+        "example": "33000"
+      }
+    }
+  }
+}

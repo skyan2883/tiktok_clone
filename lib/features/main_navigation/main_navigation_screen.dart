@@ -8,6 +8,7 @@ import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 var tabIdx = {
   'home': 0,
@@ -17,14 +18,24 @@ var tabIdx = {
 };
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  final int initialTab;
+  final dynamic tmp1;
+  final dynamic tmp2;
+  final dynamic tmp3;
+  const MainNavigationScreen(
+      {super.key, required this.initialTab, this.tmp1, this.tmp2, this.tmp3});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 4;
+  late int _selectedIndex;
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialTab;
+  }
 
   void _onNavTap(int idx) {
     setState(() {
@@ -49,7 +60,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+      backgroundColor: _selectedIndex == 0 || isDarkMode(context)
+          ? Colors.black
+          : Colors.white,
       body: Stack(
         children: [
           Offstage(
@@ -66,7 +79,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != tabIdx['profile'],
-            child: const UserProfileScreen(),
+            child: UserProfileScreen(username: widget.tmp1, tab: widget.tmp2),
           ),
         ],
       ),
@@ -74,24 +87,34 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         height: 60,
         padding: const EdgeInsets.symmetric(
             vertical: Sizes.size7, horizontal: Sizes.size2),
-        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        color: _selectedIndex == 0 || isDarkMode(context)
+            ? Colors.black
+            : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavTab(
-              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+              bgColor: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.black
+                  : Colors.white,
               icon: FontAwesomeIcons.house,
-              color: _selectedIndex == 0 ? Colors.white : Colors.black,
+              color: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.white
+                  : Colors.black,
               text: 'Home',
               isSelected: _selectedIndex == tabIdx['home'],
               selectedIcon: FontAwesomeIcons.house,
               onTap: () => _onNavTap(tabIdx['home']!),
             ),
             NavTab(
-              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+              bgColor: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.black
+                  : Colors.white,
               icon: FontAwesomeIcons.compass,
-              color: _selectedIndex == 0 ? Colors.white : Colors.black,
+              color: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.white
+                  : Colors.black,
               text: 'Discover',
               isSelected: _selectedIndex == tabIdx['discover'],
               selectedIcon: FontAwesomeIcons.solidCompass,
@@ -106,18 +129,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ),
             Gaps.h20,
             NavTab(
-              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+              bgColor: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.black
+                  : Colors.white,
               icon: FontAwesomeIcons.message,
-              color: _selectedIndex == 0 ? Colors.white : Colors.black,
+              color: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.white
+                  : Colors.black,
               text: 'Inbox',
               isSelected: _selectedIndex == tabIdx['inbox'],
               selectedIcon: FontAwesomeIcons.solidMessage,
               onTap: () => _onNavTap(tabIdx['inbox']!),
             ),
             NavTab(
-              bgColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+              bgColor: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.black
+                  : Colors.white,
               icon: FontAwesomeIcons.user,
-              color: _selectedIndex == 0 ? Colors.white : Colors.black,
+              color: _selectedIndex == 0 || isDarkMode(context)
+                  ? Colors.white
+                  : Colors.black,
               text: 'Profile',
               isSelected: _selectedIndex == tabIdx['profile'],
               selectedIcon: FontAwesomeIcons.solidUser,

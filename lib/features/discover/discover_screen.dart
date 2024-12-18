@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -81,7 +82,10 @@ class _DiscoverScreenState extends State<DiscoverScreen>
         appBar: AppBar(
           leading: const Padding(
             padding: EdgeInsets.only(top: Sizes.size16, left: Sizes.size20),
-            child: FaIcon(FontAwesomeIcons.angleLeft),
+            child: Opacity(
+              opacity: 0.7,
+              child: FaIcon(FontAwesomeIcons.angleLeft),
+            ),
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -95,10 +99,15 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   controller: _textEditingController,
                   decoration: InputDecoration(
                     hintText: 'Write',
+                    hintStyle: TextStyle(
+                      color: isDarkMode(context) ? Colors.white : Colors.grey,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 1, vertical: Sizes.size4),
                     filled: true,
-                    fillColor: Colors.grey.shade200,
+                    fillColor: isDarkMode(context)
+                        ? Colors.grey.shade800
+                        : Colors.grey.shade200,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.only(
                         right: 10,
@@ -110,10 +119,12 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         children: [
                           GestureDetector(
                             onTap: onXmarkTap,
-                            child: const FaIcon(
-                              FontAwesomeIcons.solidCircleXmark,
-                              size: Sizes.size16,
-                              color: Colors.grey,
+                            child: const Opacity(
+                              opacity: 0.7,
+                              child: FaIcon(
+                                FontAwesomeIcons.solidCircleXmark,
+                                size: Sizes.size16,
+                              ),
                             ),
                           ),
                         ],
@@ -129,9 +140,12 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          FaIcon(
-                            FontAwesomeIcons.magnifyingGlass,
-                            size: Sizes.size16,
+                          Opacity(
+                            opacity: 0.7,
+                            child: FaIcon(
+                              FontAwesomeIcons.magnifyingGlass,
+                              size: Sizes.size16,
+                            ),
                           ),
                         ],
                       ),
@@ -150,7 +164,10 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             Padding(
               padding: EdgeInsets.only(
                   bottom: Sizes.size3, left: Sizes.size2, right: Sizes.size20),
-              child: FaIcon(FontAwesomeIcons.sliders),
+              child: Opacity(
+                opacity: 0.7,
+                child: FaIcon(FontAwesomeIcons.sliders),
+              ),
             ),
           ],
           bottom: TabBar(
@@ -159,10 +176,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
             isScrollable: true,
             tabAlignment: TabAlignment.center,
-            unselectedLabelColor: Colors.grey.shade500,
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Theme.of(context).indicatorColor,
             labelStyle: const TextStyle(
               fontSize: Sizes.size14,
               fontWeight: FontWeight.w600,
@@ -221,13 +236,15 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                             height: 0.9),
                       ),
                       Gaps.v8,
-                      const DefaultTextStyle(
+                      DefaultTextStyle(
                         style: TextStyle(
                           fontSize: Sizes.size12,
                           fontWeight: FontWeight.w700,
-                          color: Colors.grey,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade600,
                         ),
-                        child: Row(
+                        child: const Row(
                           children: [
                             CircleAvatar(
                               radius: Sizes.size12,

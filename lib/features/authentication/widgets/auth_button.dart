@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 /* 
   회원가입 & 로그인 스크린에 플랫폼 정하는 버튼 위젯임
@@ -30,7 +31,9 @@ class AuthButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.grey.shade300,
+              color: isDarkMode(context)
+                  ? Colors.grey.shade800
+                  : Colors.grey.shade300,
               width: Sizes.size1,
             ),
           ),

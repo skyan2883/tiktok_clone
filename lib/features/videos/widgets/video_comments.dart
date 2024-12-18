@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -51,9 +52,9 @@ class _VideoCommentsState extends State<VideoComments> {
               : MediaQuery.of(context).size.width,
         ),
         child: Scaffold(
-          backgroundColor: Colors.grey.shade50,
+          backgroundColor: isDarkMode(context) ? null : Colors.grey.shade50,
           appBar: AppBar(
-            backgroundColor: Colors.grey.shade50,
+            backgroundColor: isDarkMode(context) ? null : Colors.grey.shade50,
             automaticallyImplyLeading: false,
             title: const Text('22796 comments'),
             actions: [
@@ -80,9 +81,17 @@ class _VideoCommentsState extends State<VideoComments> {
                     itemBuilder: (context, index) => Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 18,
-                            child: Text('nico'),
+                            backgroundColor: isDarkMode(context)
+                                ? Colors.grey.shade700
+                                : null,
+                            child: Text('nico',
+                                style: TextStyle(
+                                    color: isDarkMode(context)
+                                        ? Colors.white
+                                        : null,
+                                    fontSize: Sizes.size12)),
                           ),
                           Gaps.h6,
                           Expanded(
@@ -124,7 +133,6 @@ class _VideoCommentsState extends State<VideoComments> {
                   bottom: 0,
                   child: BottomAppBar(
                     height: 75,
-                    color: Colors.white,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -152,13 +160,17 @@ class _VideoCommentsState extends State<VideoComments> {
                                   children: [
                                     FaIcon(
                                       FontAwesomeIcons.at,
-                                      color: Colors.grey.shade900,
+                                      color: isDarkMode(context)
+                                          ? Colors.grey.shade500
+                                          : Colors.grey.shade900,
                                       size: Sizes.size24,
                                     ),
                                     Gaps.h9,
                                     FaIcon(
                                       FontAwesomeIcons.faceSmile,
-                                      color: Colors.grey.shade900,
+                                      color: isDarkMode(context)
+                                          ? Colors.grey.shade500
+                                          : Colors.grey.shade900,
                                       size: Sizes.size24,
                                     ),
                                     Gaps.h9,
@@ -175,8 +187,7 @@ class _VideoCommentsState extends State<VideoComments> {
                                 ),
                               ),
                               hintText: 'Add comment...',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade500,
+                              hintStyle: const TextStyle(
                                 fontSize: Sizes.size16,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -188,7 +199,9 @@ class _VideoCommentsState extends State<VideoComments> {
                                     BorderRadius.circular(Sizes.size12),
                               ),
                               filled: true,
-                              fillColor: Colors.grey.shade100,
+                              fillColor: isDarkMode(context)
+                                  ? Colors.grey.shade800
+                                  : Colors.grey.shade200,
                             ),
                           ),
                         ),

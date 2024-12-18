@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
@@ -144,7 +145,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                       padding: EdgeInsets.only(left: Sizes.size10),
                       child: FaIcon(
                         FontAwesomeIcons.check,
-                        color: Colors.white,
                         size: Sizes.size32,
                       ),
                     ),
@@ -156,7 +156,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                       padding: EdgeInsets.only(right: Sizes.size10),
                       child: FaIcon(
                         FontAwesomeIcons.trash,
-                        color: Colors.white,
                         size: Sizes.size32,
                       ),
                     ),
@@ -167,13 +166,21 @@ class _ActivityScreenState extends State<ActivityScreen>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.grey.shade300,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade700
+                              : Colors.grey.shade300,
                           width: 1,
                         ),
                       ),
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: FaIcon(FontAwesomeIcons.bell),
+                      child: CircleAvatar(
+                        backgroundColor: isDarkMode(context)
+                            ? Colors.grey.shade800
+                            : Colors.white,
+                        child: FaIcon(
+                          FontAwesomeIcons.bell,
+                          color:
+                              isDarkMode(context) ? Colors.white : Colors.black,
+                        ),
                       ),
                     ),
                     title: RichText(
@@ -181,23 +188,25 @@ class _ActivityScreenState extends State<ActivityScreen>
                         children: [
                           TextSpan(
                             text: 'Account updates',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Colors.black,
+                              color: isDarkMode(context) ? null : Colors.black,
                               fontSize: Sizes.size16,
                             ),
                             children: [
                               TextSpan(
                                 text: ': Upload longer videos',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.normal,
+                                  color: isDarkMode(context)
+                                      ? Colors.grey.shade400
+                                      : Colors.grey.shade600,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: ' $notification',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.grey.shade400,
                                     ),
                                   ),
                                 ],
@@ -210,7 +219,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                     trailing: const FaIcon(
                       FontAwesomeIcons.chevronRight,
                       size: Sizes.size16,
-                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -225,9 +233,9 @@ class _ActivityScreenState extends State<ActivityScreen>
           SlideTransition(
             position: _panelAnimation,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(Sizes.size5),
                   bottomRight: Radius.circular(Sizes.size5),
                 ),
@@ -239,15 +247,17 @@ class _ActivityScreenState extends State<ActivityScreen>
                     ListTile(
                       title: Row(
                         children: [
-                          FaIcon(tab["icon"],
-                              size: Sizes.size20, color: Colors.black),
-                          Gaps.h10,
+                          Icon(
+                            tab["icon"],
+                            size: Sizes.size20,
+                          ),
+                          Gaps.h20,
                           Text(
                             tab["title"],
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Sizes.size16,
-                                color: Colors.black),
+                              fontWeight: FontWeight.bold,
+                              fontSize: Sizes.size16,
+                            ),
                           ),
                         ],
                       ),

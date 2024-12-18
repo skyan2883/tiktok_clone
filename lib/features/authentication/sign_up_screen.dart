@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screens/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
+import 'package:tiktok_clone/features/authentication/sign_up_screens/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+  static const routeURL = '/';
+  static const routeName = 'signUp';
 
   void onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
-      ),
-    );
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
@@ -38,34 +33,31 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Gaps.v80,
-                  const Text(
-                    'Sign up for TikTok',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: Sizes.size24,
-                    ),
+                  Text(
+                    S.of(context).signUp('TikTok'),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Gaps.v20,
                   Text(
-                    'Create a profile, follow other accounrts, make your own videos, and more.',
-                    style: TextStyle(
-                      fontSize: Sizes.size12,
-                      color: isDarkMode(context)
-                          ? Colors.grey.shade300
-                          : Colors.black45,
-                    ),
+                    S.of(context).signUpDescription(1),
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: Sizes.size11,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade300
+                              : Colors.black45,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   Gaps.v40,
                   AuthButton(
                     icon: const FaIcon(FontAwesomeIcons.user),
-                    text: 'Use email & password',
+                    text: S.of(context).signUpWithEmail,
                     onTapFunction: _onEmailTap,
                   ),
                   Gaps.v14,
                   AuthButton(
                     icon: const FaIcon(FontAwesomeIcons.apple),
-                    text: 'Continue with Apple',
+                    text: S.of(context).signUpWithApple,
                     onTapFunction: (context) {},
                   ),
                 ],
@@ -81,17 +73,17 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Text(
-                    'Already have an account?',
-                    style: TextStyle(
+                  Text(
+                    S.of(context).alreadyHaveAnAccount,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Gaps.h4,
+                  Gaps.h8,
                   GestureDetector(
                     onTap: () => onLoginTap(context),
                     child: Text(
-                      'Log in',
+                      S.of(context).login,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w600,

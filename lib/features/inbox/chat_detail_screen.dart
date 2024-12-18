@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -35,7 +36,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         elevation: 0,
         leadingWidth: 30,
         title: Row(
@@ -102,18 +102,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.flag,
               size: Sizes.size20,
-              color: Colors.black,
+              color: isDarkMode(context) ? Colors.white : Colors.black,
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.ellipsis,
               size: Sizes.size20,
-              color: Colors.black,
+              color: isDarkMode(context) ? Colors.white : Colors.black,
             ),
           ),
         ],
@@ -183,7 +183,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 top: Sizes.size12,
                 bottom: Sizes.size28,
               ),
-              color: Colors.grey.shade200,
               child: Row(
                 children: [
                   const Expanded(
@@ -202,7 +201,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           bottom: Sizes.size10,
                         ),
                         hintText: 'Send a message',
-                        fillColor: Colors.white,
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.only(

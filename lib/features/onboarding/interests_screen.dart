@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});
@@ -104,14 +105,12 @@ class _InterestsScreenState extends State<InterestsScreen> {
               milliseconds: 300,
             ),
             child: Container(
-              color: Colors.grey.withOpacity(0.4),
               height: 1.0,
             ),
           ),
         ),
         scrolledUnderElevation: 0,
         elevation: 0,
-        backgroundColor: Colors.white,
         title: AnimatedOpacity(
           opacity: _showTitle ? 1 : 0,
           duration: const Duration(
@@ -136,21 +135,23 @@ class _InterestsScreenState extends State<InterestsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Gaps.v32,
-                const Text(
+                Text(
                   'Choose your interests',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: isDarkMode(context) ? Colors.white : Colors.black,
                     fontSize: Sizes.size36,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 Gaps.v12,
-                const Text(
-                  'Get better video recommendations',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Sizes.size16 + Sizes.size2,
-                    fontWeight: FontWeight.w600,
+                const Opacity(
+                  opacity: 0.7,
+                  child: Text(
+                    'Get better video recommendations',
+                    style: TextStyle(
+                      fontSize: Sizes.size16 + Sizes.size2,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Gaps.v64,
@@ -170,7 +171,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 110,
-        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(
             bottom: Sizes.size32,
@@ -185,7 +185,9 @@ class _InterestsScreenState extends State<InterestsScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDarkMode(context)
+                        ? Colors.grey.shade800
+                        : Colors.white,
                     border: Border.all(
                       color: Colors.black.withOpacity(0.1),
                     ),
@@ -193,12 +195,12 @@ class _InterestsScreenState extends State<InterestsScreen> {
                   padding: const EdgeInsets.symmetric(
                     vertical: Sizes.size10,
                   ),
-                  child: const Text(
+                  child: Text(
                     'Skip',
                     style: TextStyle(
                       fontSize: Sizes.size16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: isDarkMode(context) ? Colors.white : Colors.black,
                     ),
                   ),
                 ),

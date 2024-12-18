@@ -5,9 +5,16 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/features/users/persistent_tab_bar.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+  final String tab;
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -24,6 +31,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
+        initialIndex: widget.tab == 'posts' ? 0 : 1,
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxScrolled) {
@@ -36,9 +44,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       onPressed: () {},
                       icon: const FaIcon(FontAwesomeIcons.angleLeft),
                     ),
-                    title: const Text(
-                      'FIFA',
-                      style: TextStyle(
+                    title: Text(
+                      widget.username,
+                      style: const TextStyle(
                         fontSize: Sizes.size20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -75,9 +83,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    '@fifaworldcup',
-                                    style: TextStyle(
+                                  Text(
+                                    widget.username,
+                                    style: const TextStyle(
                                       fontSize: Sizes.size16,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -170,13 +178,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                               width: 1,
                                             ),
                                           ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
                                               vertical: Sizes.size10,
                                             ),
                                             child: FaIcon(
                                                 FontAwesomeIcons.youtube,
-                                                color: Colors.black,
+                                                color: isDarkMode(context)
+                                                    ? Colors.white
+                                                    : Colors.black,
                                                 size: Sizes.size14),
                                           ),
                                         ),
@@ -192,13 +202,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                               width: 1,
                                             ),
                                           ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
                                               vertical: Sizes.size10,
                                             ),
                                             child: FaIcon(
                                                 FontAwesomeIcons.arrowDown,
-                                                color: Colors.black,
+                                                color: isDarkMode(context)
+                                                    ? Colors.white
+                                                    : Colors.black,
                                                 size: Sizes.size14),
                                           ),
                                         ),
@@ -242,6 +254,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
                   sliver: SliverAppBar(
+                    backgroundColor: isDarkMode(context) ? Colors.black : null,
                     leading: IconButton(
                       onPressed: () {},
                       icon: const FaIcon(FontAwesomeIcons.angleLeft),
@@ -280,9 +293,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            '@fifaworldcup',
-                            style: TextStyle(
+                          Text(
+                            widget.username,
+                            style: const TextStyle(
                               fontSize: Sizes.size16,
                               fontWeight: FontWeight.w700,
                             ),
@@ -364,12 +377,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       width: 1,
                                     ),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
                                       vertical: Sizes.size10,
                                     ),
                                     child: FaIcon(FontAwesomeIcons.youtube,
-                                        color: Colors.black,
+                                        color: isDarkMode(context)
+                                            ? Colors.white
+                                            : Colors.black,
                                         size: Sizes.size14),
                                   ),
                                 ),
@@ -388,12 +403,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       width: 1,
                                     ),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
                                       vertical: Sizes.size10,
                                     ),
                                     child: FaIcon(FontAwesomeIcons.arrowDown,
-                                        color: Colors.black,
+                                        color: isDarkMode(context)
+                                            ? Colors.white
+                                            : Colors.black,
                                         size: Sizes.size14),
                                   ),
                                 ),
@@ -532,14 +549,15 @@ class ProfileCount extends StatelessWidget {
           style: const TextStyle(
             fontSize: Sizes.size16,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
           ),
         ),
         Text(
           title,
           style: TextStyle(
             fontSize: Sizes.size12,
-            color: Colors.grey.shade500,
+            color: isDarkMode(context)
+                ? Colors.grey.shade600
+                : Colors.grey.shade700,
           ),
         ),
       ],

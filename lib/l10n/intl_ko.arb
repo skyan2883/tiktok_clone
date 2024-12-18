@@ -1,0 +1,24 @@
+{
+  "signUp": "{nameOfTheApp}에 가입하기",
+  "signUpDescription": "나만의 프로필, 다른 계정들을 팔로우, 자신의 비디오 만들기 등...",
+  "signUpWithEmail": "이메일 & 비밀번호로 로그인",
+  "signUpWithApple": "Apple 계정으로 계속하기",
+  "alreadyHaveAnAccount": "이미 계정이 있다면?",
+  "login": "로그인",
+  "loginTitle": "{nameOfTheApp}에 로그인하기",
+  "@loginTitle": {
+    "description": "사람들이 틱톡을 최초로 실행했을 때 보이는 화면",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TikTok"
+      }
+    }
+  },
+  "loginSubTitle": "계정 관리, 알림 확인, 동영상 댓글 달기 등을 할 수 있습니다.",
+  "loginWithEmail": "이메일 / 사용자 이름으로 로그인",
+  "loginWithApple": "Apple로 계속하기",
+  "dontHavaAccount": "계정이 없으신가요?",
+  "likeCount": "{value}",
+  "commentCount": "{value}"
+}

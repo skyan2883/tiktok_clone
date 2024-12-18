@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 enum Direction { right, left }
 
@@ -49,7 +50,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
   void _onEnterTap() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+        MaterialPageRoute(
+            builder: (context) => const MainNavigationScreen(initialTab: 0)),
         (route) => false);
   }
 
@@ -73,8 +75,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: isDarkMode(context) ? Colors.black : Colors.white,
           height: 110,
-          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size12,
@@ -88,7 +90,10 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 onPressed: _onEnterTap,
                 child: const Text(
                   'Enter the app!',
-                  style: TextStyle(fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -113,7 +118,6 @@ class Page1 extends StatelessWidget {
         const Text(
           'Watch cool videos!',
           style: TextStyle(
-            color: Colors.black,
             fontSize: Sizes.size28,
             fontWeight: FontWeight.bold,
           ),
@@ -146,7 +150,6 @@ class Page2 extends StatelessWidget {
         const Text(
           'Follow the rules',
           style: TextStyle(
-            color: Colors.black,
             fontSize: Sizes.size28,
             fontWeight: FontWeight.bold,
           ),

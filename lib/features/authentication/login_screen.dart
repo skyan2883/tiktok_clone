@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screens/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const routeURL = 'login';
+  static const routeName = 'login';
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginFormScreen(),
-      ),
-    );
+    context.push(LoginFormScreen.routeName);
   }
 
   @override
@@ -29,35 +30,33 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
-                'Log in to TikTok',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: Sizes.size24,
-                ),
+              Text(
+                S.of(context).loginTitle('TikTok'),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Gaps.v20,
-              const Text(
-                'Manage your account, check notifications, comment on videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size12,
-                  color: Colors.black45,
+              Opacity(
+                opacity: 0.7,
+                child: Text(
+                  S.of(context).loginSubTitle,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontSize: Sizes.size12,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
                 child: AuthButton(
                   icon: const FaIcon(FontAwesomeIcons.user),
-                  text: 'Use email / username',
+                  text: S.of(context).loginWithEmail,
                   onTapFunction: _onEmailLoginTap,
                 ),
               ),
               Gaps.v14,
               AuthButton(
                 icon: const FaIcon(FontAwesomeIcons.apple),
-                text: 'Continue with Apple',
+                text: S.of(context).loginWithApple,
                 onTapFunction: (context) {},
               ),
             ],
@@ -66,16 +65,16 @@ class LoginScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
           elevation: 2,
-          color: Colors.grey.shade50,
+          color: isDarkMode(context) ? null : Colors.grey.shade50,
           height: Sizes.size96,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size20,
             ),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Text(
-                'Don\'t have an account?',
-                style: TextStyle(
+              Text(
+                S.of(context).dontHavaAccount,
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -83,7 +82,7 @@ class LoginScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () => _onSignUpTap(context),
                 child: Text(
-                  'Sign up',
+                  S.of(context).signUp('TikTok'),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w600,
