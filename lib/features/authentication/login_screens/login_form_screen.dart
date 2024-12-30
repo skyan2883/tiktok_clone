@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
-  static const routeName = '/login/loginForm';
-
   const LoginFormScreen({super.key});
 
   @override
@@ -26,12 +25,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   }
 
   void _onLogin() {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const InterestsScreen(),
-        ), (route) {
-      return false;
-    });
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _onScaffoldTap() {

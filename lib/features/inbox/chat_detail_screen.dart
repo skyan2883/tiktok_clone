@@ -5,8 +5,10 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
-
+  const ChatDetailScreen({super.key, required this.chatID});
+  static const routeName = 'chatDetail';
+  static const routeURL = ':chatID';
+  final String chatID;
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
@@ -81,9 +83,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'xxxxmmm967',
-                  style: TextStyle(
+                Text(
+                  'Lynn (index : ${widget.chatID})',
+                  style: const TextStyle(
                     fontSize: Sizes.size14,
                     fontWeight: FontWeight.w600,
                   ),

@@ -251,193 +251,197 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ],
               if (!kIsWeb) ...[
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
-                  sliver: SliverAppBar(
-                    backgroundColor: isDarkMode(context) ? Colors.black : null,
-                    leading: IconButton(
-                      onPressed: () {},
-                      icon: const FaIcon(FontAwesomeIcons.angleLeft),
-                    ),
-                    title: const Text(
-                      'FIFA',
-                      style: TextStyle(
-                        fontSize: Sizes.size20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    actions: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const FaIcon(FontAwesomeIcons.bell),
-                      ),
-                      IconButton(
-                        onPressed: _onSettingsTap,
-                        icon: const FaIcon(FontAwesomeIcons.gear),
-                      ),
-                    ],
+                SliverAppBar(
+                  backgroundColor: isDarkMode(context) ? Colors.black : null,
+                  leading: IconButton(
+                    onPressed: () {},
+                    icon: const FaIcon(FontAwesomeIcons.angleLeft),
                   ),
+                  title: const Text(
+                    'FIFA',
+                    style: TextStyle(
+                      fontSize: Sizes.size20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const FaIcon(FontAwesomeIcons.bell),
+                    ),
+                    IconButton(
+                      onPressed: _onSettingsTap,
+                      icon: const FaIcon(FontAwesomeIcons.gear),
+                    ),
+                  ],
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      Gaps.v10,
-                      const CircleAvatar(
-                        radius: Sizes.size64,
-                        foregroundImage: NetworkImage(
-                          'https://pbs.twimg.com/media/FkGUNuqXEAMktM-.jpg',
-                        ),
-                        child: Text('FIFA'),
-                      ),
-                      Gaps.v10,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.username,
-                            style: const TextStyle(
-                              fontSize: Sizes.size16,
-                              fontWeight: FontWeight.w700,
-                            ),
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Column(
+                      children: [
+                        Gaps.v10,
+                        const CircleAvatar(
+                          radius: Sizes.size64,
+                          foregroundImage: NetworkImage(
+                            'https://pbs.twimg.com/media/FkGUNuqXEAMktM-.jpg',
                           ),
-                          Gaps.h5,
-                          FaIcon(FontAwesomeIcons.solidCircleCheck,
-                              color: Colors.lightBlue.shade300,
-                              size: Sizes.size14),
-                        ],
-                      ),
-                      Gaps.v16,
-                      SizedBox(
-                        height: Sizes.size44,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const ProfileCount(count: '37', title: 'Following'),
-                            VerticalDivider(
-                              indent: Sizes.size10,
-                              endIndent: Sizes.size10,
-                              color: Colors.grey.shade300,
-                              thickness: Sizes.size1,
-                              width: Sizes.size32,
-                            ),
-                            const ProfileCount(
-                                count: '10.5M', title: 'Followers'),
-                            VerticalDivider(
-                              indent: Sizes.size10,
-                              endIndent: Sizes.size10,
-                              color: Colors.grey.shade300,
-                              thickness: Sizes.size1,
-                              width: Sizes.size32,
-                            ),
-                            const ProfileCount(count: '149.3M', title: 'Likes'),
-                          ],
+                          child: Text('FIFA'),
                         ),
-                      ),
-                      Gaps.v10,
-                      FractionallySizedBox(
-                        widthFactor: 0.7,
-                        child: Row(
+                        Gaps.v10,
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Flexible(
-                              flex: 4,
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius:
-                                      BorderRadius.circular(Sizes.size3),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Sizes.size10,
-                                  ),
-                                  child: Text(
-                                    'Follow',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
+                            Text(
+                              widget.username,
+                              style: const TextStyle(
+                                fontSize: Sizes.size16,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Gaps.h5,
-                            Flexible(
-                              flex: 1,
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey.shade300,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: Sizes.size10,
-                                    ),
-                                    child: FaIcon(FontAwesomeIcons.youtube,
-                                        color: isDarkMode(context)
-                                            ? Colors.white
-                                            : Colors.black,
-                                        size: Sizes.size14),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Gaps.h5,
-                            Flexible(
-                              flex: 1,
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey.shade300,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: Sizes.size10,
-                                    ),
-                                    child: FaIcon(FontAwesomeIcons.arrowDown,
-                                        color: isDarkMode(context)
-                                            ? Colors.white
-                                            : Colors.black,
-                                        size: Sizes.size14),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            FaIcon(FontAwesomeIcons.solidCircleCheck,
+                                color: Colors.lightBlue.shade300,
+                                size: Sizes.size14),
                           ],
                         ),
-                      ),
-                      Gaps.v10,
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Sizes.size32),
-                        child: Text(
-                          'FIFA is the official account of the Fédération Internationale de Football Association (FIFA), the world governing body for football. FIFA.com is the official website of FIFA, the governing body of football. FIFA.com is the official website of FIFA, the governing body of football.',
-                          style: TextStyle(
-                            fontSize: Sizes.size12,
+                        Gaps.v16,
+                        SizedBox(
+                          height: Sizes.size44,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const ProfileCount(
+                                  count: '37', title: 'Following'),
+                              VerticalDivider(
+                                indent: Sizes.size10,
+                                endIndent: Sizes.size10,
+                                color: Colors.grey.shade300,
+                                thickness: Sizes.size1,
+                                width: Sizes.size32,
+                              ),
+                              const ProfileCount(
+                                  count: '10.5M', title: 'Followers'),
+                              VerticalDivider(
+                                indent: Sizes.size10,
+                                endIndent: Sizes.size10,
+                                color: Colors.grey.shade300,
+                                thickness: Sizes.size1,
+                                width: Sizes.size32,
+                              ),
+                              const ProfileCount(
+                                  count: '149.3M', title: 'Likes'),
+                            ],
                           ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const LinkButton(
-                        icon: FaIcon(FontAwesomeIcons.link, size: Sizes.size12),
-                        text: 'https://www.fifa.com/worldcup',
-                      ),
-                      Gaps.v20,
-                    ],
+                        Gaps.v10,
+                        FractionallySizedBox(
+                          widthFactor: 0.7,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 4,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius:
+                                        BorderRadius.circular(Sizes.size3),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: Sizes.size10,
+                                    ),
+                                    child: Text(
+                                      'Follow',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Gaps.h5,
+                              Flexible(
+                                flex: 1,
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey.shade300,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: Sizes.size10,
+                                      ),
+                                      child: FaIcon(FontAwesomeIcons.youtube,
+                                          color: isDarkMode(context)
+                                              ? Colors.white
+                                              : Colors.black,
+                                          size: Sizes.size14),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Gaps.h5,
+                              Flexible(
+                                flex: 1,
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey.shade300,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: Sizes.size10,
+                                      ),
+                                      child: FaIcon(FontAwesomeIcons.arrowDown,
+                                          color: isDarkMode(context)
+                                              ? Colors.white
+                                              : Colors.black,
+                                          size: Sizes.size14),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Gaps.v10,
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: Sizes.size32),
+                          child: Text(
+                            'FIFA is the official account of the Fédération Internationale de Football Association (FIFA), the world governing body for football. FIFA.com is the official website of FIFA, the governing body of football. FIFA.com is the official website of FIFA, the governing body of football.',
+                            style: TextStyle(
+                              fontSize: Sizes.size12,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const LinkButton(
+                          icon:
+                              FaIcon(FontAwesomeIcons.link, size: Sizes.size12),
+                          text: 'https://www.fifa.com/worldcup',
+                        ),
+                        Gaps.v20,
+                      ],
+                    ),
                   ),
                 ),
                 SliverPersistentHeader(

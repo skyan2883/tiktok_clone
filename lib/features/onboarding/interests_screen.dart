@@ -7,7 +7,8 @@ import 'package:tiktok_clone/utils.dart';
 
 class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});
-
+  static const routeName = 'interests';
+  static const routeURL = '/tutorial';
   static const interests = [
     "Daily Life",
     "Comedy",

@@ -1,77 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
-import 'package:tiktok_clone/features/authentication/login_screens/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screens/email_screen.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screens/username_screen.dart';
-import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
-import 'package:tiktok_clone/features/users/user_profile_screen.dart';
+import 'package:tiktok_clone/features/inbox/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/chats_screen.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
 
 final router = GoRouter(
+  initialLocation: '/inbox',
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,
       path: SignUpScreen.routeURL,
       builder: (context, state) => const SignUpScreen(),
-      routes: [
-        GoRoute(
-          name: UsernameScreen.routeName,
-          path: UsernameScreen.routeURL,
-          builder: (context, state) => const UsernameScreen(),
-          routes: [
-            GoRoute(
-              name: EmailScreen.routeName,
-              path: EmailScreen.routeURL,
-              builder: (context, state) {
-                final args = state.extra as EmailScreenArgs;
-                return EmailScreen(username: args.username);
-              },
-            ),
-          ],
-        ),
-      ],
     ),
     GoRoute(
       name: LoginScreen.routeName,
       path: LoginScreen.routeURL,
       builder: (context, state) => const LoginScreen(),
     ),
-    // GoRoute(
-    //   name: 'username_screen',
-    //   path: UsernameScreen.routeName,
-    //   pageBuilder: (context, state) {
-    //     print("UsernameScreen");
-    //     return CustomTransitionPage(
-    //       child: const UsernameScreen(),
-    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //         return FadeTransition(
-    //           opacity: animation,
-    //           child: ScaleTransition(
-    //             scale: animation,
-    //             child: child,
-    //           ),
-    //         );
-    //       },
-    //     );
-    //   },
-    // ),
-
     GoRoute(
-      path: LoginFormScreen.routeName,
-      builder: (context, state) => const LoginFormScreen(),
+      name: InterestsScreen.routeName,
+      path: InterestsScreen.routeURL,
+      builder: (context, state) => const InterestsScreen(),
     ),
     GoRoute(
-      path: "/users/:username",
+      path: "/:tab(home|discover|inbox|profile)",
+      name: MainNavigationScreen.routeName,
       builder: (context, state) {
-        final username = state.pathParameters['username'] ?? 'Unknown';
-        final tab = state.uri.queryParameters['show'];
-        return MainNavigationScreen(
-          initialTab: 4,
-          tmp1: username,
-          tmp2: tab,
-        );
+        final tab = state.pathParameters['tab']!;
+        return MainNavigationScreen(tab: tab);
       },
+    ),
+    GoRoute(
+      name: ActivityScreen.routeName,
+      path: ActivityScreen.routeURL,
+      builder: (context, state) => const ActivityScreen(),
+    ),
+    GoRoute(
+      name: ChatsScreen.routeName,
+      path: ChatsScreen.routeURL,
+      builder: (context, state) => const ChatsScreen(),
+      routes: [
+        GoRoute(
+          name: ChatDetailScreen.routeName,
+          path: ChatDetailScreen.routeURL,
+          builder: (context, state) {
+            final chatID = state.pathParameters['chatID']!;
+            return ChatDetailScreen(chatID: chatID);
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      name: VideoRecordingScreen.routeName,
+      path: VideoRecordingScreen.routeURL,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        transitionDuration: const Duration(milliseconds: 150),
+        child: const VideoRecordingScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final position = Tween(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(animation);
+          return SlideTransition(
+            position: position,
+            child: child,
+          );
+        },
+      ),
     ),
   ],
 );

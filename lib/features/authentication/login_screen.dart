@@ -9,7 +9,7 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routeURL = 'login';
+  static const routeURL = '/login';
   static const routeName = 'login';
   const LoginScreen({super.key});
 
@@ -18,7 +18,12 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    context.push(LoginFormScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginFormScreen(),
+      ),
+    );
   }
 
   @override

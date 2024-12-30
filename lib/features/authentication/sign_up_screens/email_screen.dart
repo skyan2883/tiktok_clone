@@ -4,15 +4,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screens/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
-class EmailScreenArgs {
-  final String username;
-
-  EmailScreenArgs({required this.username});
-}
-
 class EmailScreen extends StatefulWidget {
-  static const routeURL = 'email';
-  static const routeName = 'email';
   final String username;
   const EmailScreen({super.key, required this.username});
 

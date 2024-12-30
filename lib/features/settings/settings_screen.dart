@@ -1,28 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
+import 'package:tiktok_clone/common/widgets/settings/toggle_dark_mode.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void onChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -39,18 +27,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: ListView(
               children: [
                 ListTile(
-                  title: const Text('Enable notifications'),
+                  title: const Text('Auto Mute'),
                   trailing: CupertinoSwitch(
-                    value: _notifications,
-                    onChanged: onChanged,
+                    value: ref.watch(playbackConfigProvider).autoMute,
+                    onChanged: (value) {
+                      ref.read(playbackConfigProvider.notifier).setMuted(value);
+                    },
                   ),
                 ),
-                CheckboxListTile(
-                  activeColor:
-                      isDarkMode(context) ? Colors.green : Colors.black,
-                  title: const Text('Marketing emails'),
-                  value: _notifications,
-                  onChanged: onChanged,
+                ListTile(
+                  title: const Text('Auto Play'),
+                  trailing: CupertinoSwitch(
+                    value: ref.watch(playbackConfigProvider).autoPlay,
+                    onChanged: (value) {
+                      ref
+                          .read(playbackConfigProvider.notifier)
+                          .setAutoPlay(value);
+                    },
+                  ),
+                ),
+                ValueListenableBuilder(
+                  valueListenable: themeModeFlag,
+                  builder: (context, themeMode, child) => ListTile(
+                    title: const Text('Toggle Dark Mode'),
+                    trailing: CupertinoSwitch(
+                      value: themeModeFlag.value,
+                      onChanged: (value) {
+                        themeModeFlag.value = !themeModeFlag.value;
+                      },
+                    ),
+                  ),
                 ),
                 ListTile(
                   title: const Text('About',
@@ -128,13 +134,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       firstDate: DateTime(1980),
                       lastDate: DateTime(2030),
                     );
-                    if (!mounted) return;
 
                     final time = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.now(),
                     );
-                    if (!mounted) return;
 
                     final booking = await showDateRangePicker(
                       context: context,
